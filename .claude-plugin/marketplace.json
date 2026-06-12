@@ -1,0 +1,40 @@
+{
+  "name": "loop-foundry",
+  "owner": {
+    "name": "umar-s"
+  },
+  "metadata": {
+    "description": "Loop engineering pipeline for Claude Code — turn recurring backlog tasks into supervised agent loops",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "loop-foundry",
+      "source": "./plugins/loop-foundry",
+      "description": "End-to-end loop-engineering pipeline: applicability filter → YouTrack backlog triage → LOOP_SPECs → gap analysis → runner generation → staged autonomy ladder (shadow → gated → autonomous) with measured approval rates. Refuses to build loops where the approach does not apply.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Sergei",
+        "email": "sergei.bitsmedia@gmail.com"
+      },
+      "repository": "https://github.com/umar-s/loop-foundry",
+      "license": "MIT",
+      "keywords": [
+        "agent-loops",
+        "loop-engineering",
+        "automation",
+        "youtrack",
+        "gitlab",
+        "autonomy-ladder",
+        "supervised-agents"
+      ],
+      "category": "automation",
+      "tags": [
+        "loops",
+        "agents",
+        "backlog-triage",
+        "orchestration"
+      ]
+    }
+  ]
+}

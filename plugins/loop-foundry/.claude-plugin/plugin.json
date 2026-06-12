@@ -1,0 +1,19 @@
+{
+  "name": "loop-foundry",
+  "version": "1.0.0",
+  "description": "End-to-end pipeline for applying the loop-engineering approach to a project's task backlog: applicability assessment, YouTrack task triage, LOOP_SPEC authoring, runner generation, gap analysis, and a staged launch ladder (shadow → gated → autonomous) with measured approval rates. The human stays the architect: every phase ends in a hard STOP for approval.",
+  "author": {
+    "name": "Sergei",
+    "email": "sergei.bitsmedia@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "agent-loops",
+    "loop-engineering",
+    "automation",
+    "youtrack",
+    "gitlab",
+    "autonomy-ladder",
+    "supervised-agents"
+  ]
+}
