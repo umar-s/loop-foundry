@@ -4,15 +4,14 @@
     "name": "umar-s"
   },
   "metadata": {
-    "description": "Loop engineering pipeline for Claude Code — turn recurring backlog tasks into supervised agent loops",
-    "version": "1.0.0"
+    "description": "Loop engineering pipeline for Claude Code — turn recurring backlog tasks into supervised agent loops"
   },
   "plugins": [
     {
       "name": "loop-foundry",
+      "displayName": "Loop Foundry",
       "source": "./plugins/loop-foundry",
       "description": "End-to-end loop-engineering pipeline: applicability filter → YouTrack backlog triage → LOOP_SPECs → gap analysis → runner generation → staged autonomy ladder (shadow → gated → autonomous) with measured approval rates. Refuses to build loops where the approach does not apply.",
-      "version": "1.0.0",
       "author": {
         "name": "Sergei",
         "email": "sergei.bitsmedia@gmail.com"

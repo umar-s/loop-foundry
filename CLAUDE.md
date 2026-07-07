@@ -12,7 +12,7 @@ Marketplace-репозиторий Claude Code с одним плагином �
 - `plugins/loop-foundry/.claude-plugin/plugin.json` — метаданные плагина.
 - `plugins/loop-foundry/skills/loop-foundry/` — сам скилл: `SKILL.md` + `references/`.
 
-Версии в `marketplace.json` (две: metadata и запись плагина) и `plugin.json` должны совпадать — при релизе правок поднимать все три.
+Версия плагина живёт **только** в `plugin.json` — единственный источник истины; в `marketplace.json` версий нет (конвенция anthropics/knowledge-work-plugins). Плагин также включён в зонтичный marketplace-каталог github.com/umar-s/devpowers, который ссылается сюда через `git-subdir` с `ref: main` — отдельного релизного шага там не требуется.
 
 ## Команды
 
