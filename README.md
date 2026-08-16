@@ -1,5 +1,9 @@
 # loop-foundry
 
+[![version](https://img.shields.io/github/v/release/umar-s/loop-foundry?label=version&color=0b7285)](https://github.com/umar-s/loop-foundry/releases/latest)
+[![changelog](https://img.shields.io/badge/changelog-keep--a--changelog-0b7285)](CHANGELOG.md)
+[![license](https://img.shields.io/badge/license-MIT-0b7285)](LICENSE)
+
 A loop-engineering pipeline for Claude Code, packaged as a plugin. Takes a project from applicability assessment, through YouTrack task inventory and triage, to writing LOOP_SPECs, generating runner scripts, gap analysis, and a staged launch ladder — shadow → gated → autonomous — with measured approval rates.
 
 The skill's defining feature is that it **refuses to build loops where the approach does not apply**. A NO-GO verdict is a successful outcome, not a failure.
