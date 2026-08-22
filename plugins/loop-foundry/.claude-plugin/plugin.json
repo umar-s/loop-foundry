@@ -1,7 +1,7 @@
 {
   "name": "loop-foundry",
-  "version": "1.0.0",
-  "description": "End-to-end pipeline for applying the loop-engineering approach to a project's task backlog: applicability assessment, YouTrack task triage, LOOP_SPEC authoring, runner generation, gap analysis, and a staged launch ladder (shadow → gated → autonomous) with measured approval rates. The human stays the architect: every phase ends in a hard STOP for approval.",
+  "version": "1.1.0",
+  "description": "End-to-end pipeline for applying the loop-engineering approach to a project's task backlog: applicability assessment, YouTrack task triage, LOOP_SPEC authoring, runner generation, gap analysis, and a staged launch ladder (shadow → gated → autonomous) with measured approval rates. The human stays the architect: every phase ends in a hard STOP for approval. Companion: prediction-protocol — receipts for one-way commands in every tick, required past shadow.",
   "author": {
     "name": "Sergei",
     "email": "sergei.bitsmedia@gmail.com"

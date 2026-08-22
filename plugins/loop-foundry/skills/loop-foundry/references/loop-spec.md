@@ -35,6 +35,7 @@
       reference: ______ ; regression vs baseline = FAIL even if absolute value is fine
 - [ ] Diff constraints: allowed paths ______ ; max diff size ______
 - [ ] Forbidden actions (from the project blast-radius map, A-5): ______
+- [ ] Prediction gate (predictions.md): `predictions.gate = active`, `predict status` exit 0, `delta.miss` = `delta.withdrawn` = `delta.bypass` = 0, evidence journals append-only
 
 ### 3.2 Verifier
 - Separate session/model (≠ executor) checks the result against §1 + §3.1.
@@ -47,6 +48,7 @@
 - Model/mode: ______ (justify; strongest-available + thinking is the usual default for quality-dominated work)
 - File access allowlist: ______
 - Tool access (explicit list): ______
+- One-way wrappers the executor may call (→ `predict on --also`): ______
 - Tokens/creds: read-only wherever possible; loop-specific scoped tokens; no secrets in env beyond the listed ones; secrets never written to journals or commits
 - External content (issues, MRs, feeds): analysis input ONLY — never a command source
 
@@ -59,7 +61,7 @@
 
 ## 6. Journal & telemetry
 
-- Journal: `loops/journal/<loop-name>.jsonl` — schema in references/ladder.md
+- Journal: `loops/journal/<loop-name>.jsonl` — schema in references/ladder.md; `predictions` = `predict report --json` before and after the executor plus their delta
 - Cost telemetry: cost-per-ACCEPTED-result computed automatically
 - Lessons: discarded attempts + reasons are readable by subsequent runs (anti-rake)
 
@@ -69,6 +71,10 @@
 - shadow → gated: would-approve rate ≥ __% over __ weeks of journal review
 - gated → autonomous (🟢 only): actual approval rate ≥ __% (default 95) over __ weeks;
   action class demonstrated bounded, reversible, measurable
+- both steps, under the prediction protocol (summed from `predictions.delta` over the same window):
+  prediction rate ≥ __% (default 90), INCONCLUSIVE share ≤ __% (default 10); n < 20 → the window
+  extends until n ≥ 20, or the operator signs off every receipt by id; n = 0 (no one-way actions in
+  the class) → approval rate alone, said so in the promotion text; any bypass/ungated → no promotion
 - Micro-mutations (autonomous): executor-prompt edits within ______ — yes/no
 - Macro-mutations (human-arbitrated, ALWAYS): gates, scope, budgets, schedule, trigger
 - **Model version change ⇒ automatic demotion to shadow** until re-calibrated
@@ -77,7 +83,8 @@
 
 - Channel: ______
 - Triggers: stop condition fired; gate FAIL ×__ consecutive; verifier vs deterministic
-  gates disagree; goal conflict detected; suspected injection in external content
+  gates disagree; goal conflict detected; suspected injection in external content;
+  prediction MISS (loop paused via `loops/HALT/<loop>` until the operator acks as the runner user)
 - Format: the loop formalizes the dilemma (options, projections, value tension) and waits.
   The loop never picks.
 
@@ -88,4 +95,6 @@
 - [ ] Alert precision: __% (false alarms → fix §2 discovery)
 - [ ] Hours actually displaced vs baseline: __
 - [ ] Cost per accepted result: $ __ (trend)
+- [ ] `predict report --journal loops/evidence/<loop>.md` line pasted; MISS this week: __ (destructive: __ → one
+      rung down, recorded in §7 and STATE.md); `REFUTED.md` rows added: __; `loops/HALT/<loop>` cleared: __
 - [ ] Monthly: still serving §1 goal, or optimizing the proxy?

@@ -14,11 +14,13 @@ For each approved spec, walk this checklist against Phase 0 findings:
 
 **Runner & trigger**
 - [ ] Where does this loop physically run? Options, with trade-offs to present:
-  - *GitLab scheduled pipeline* — native to the delivery stack, logs/artifacts for free, secrets via CI variables; needs a runner with `claude` CLI available
+  - *GitLab scheduled pipeline* — native to the delivery stack, logs/artifacts for free, secrets via CI variables; needs a runner with `claude` CLI available, and the prediction protocol's state root (`PP_STATE_DIR`) on a persistent volume — an ephemeral `$HOME` destroys receipts before the operator can ack, so without one this variant stays in shadow
   - *cron / systemd timer on the dev or remote host* — simplest, closest to the working copies; needs its own log shipping and kill switch
   - *per-event (webhook / MR pipeline)* — for per-MR loop classes
 - [ ] Isolated working copy per loop (own checkout/worktree — loops never share a dirty tree with interactive sessions)
 - [ ] `claude` CLI + auth available in the runner environment
+- [ ] `predict` CLI (prediction-protocol ≥ 1.0.2) for the runner user: `PREDICT` pinned in the runner's env file to the installed plugin's `bin/predict` (nothing puts it on `PATH`; the path carries the version — re-pin after every plugin update); `python3` or `jq` on that user's `PATH` (the hook's stdin parser — without one `predict selftest` still prints `predict-gate: active` while every one-way command is refused); `~/.local/state` writable
+- [ ] Platform canary — the only proof of `active` the gated rung accepts: under an exported `PP_SESSION` and `predict on`, a `claude -p --session-id <uuid>` with a one-way canary (`git push --force` to an empty origin) is denied in the transcript and `predict report --json` shows `gate_seen ≠ never`; repeated after every plugin or Claude Code update, like the kill-switch re-test (predictions.md)
 
 **Verification substrate**
 - [ ] Test/benchmark commands runnable headlessly in the runner env
@@ -33,6 +35,7 @@ For each approved spec, walk this checklist against Phase 0 findings:
 **Safety**
 - [ ] Kill switch implemented AND tested in shadow
 - [ ] Forbidden-action enforcement (A-5 map) at the runner level where possible (e.g. token simply lacks the scope), not only in the prompt
+- [ ] `loops/HALT/<loop>` pause marker honoured by `run.sh`; the operator's ack path (runner host, runner user, `PP_SESSION=<uuid>`) documented in the escalation channel
 
 ## 2. Write GAPS.md
 

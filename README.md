@@ -63,6 +63,7 @@ You can also invoke it explicitly: ask Claude to "use the loop-foundry skill".
 
 - **YouTrack** REST API access for backlog triage: `YOUTRACK_URL` + `YOUTRACK_TOKEN` (read-only suffices for Phases 0–2; write scope for tagging and task creation becomes a tracked gap otherwise).
 - **GitLab** access for delivery-side loops: `GITLAB_URL` / `CI_SERVER_URL` + `GITLAB_TOKEN`, scoped per project.
+- **prediction-protocol** plugin (≥ 1.0.2) for the runner user for anything past shadow: `predict selftest` prints `predict-gate: active` there and a `claude -p` canary proves the hook is registered (Phase 4 gaps until they do).
 - Missing pieces are not blockers — Phase 4 turns them into tracked, approved infrastructure work.
 
 ## Layout
@@ -73,6 +74,9 @@ This repo is a Claude Code **marketplace** that ships a single plugin. The root 
 loop-foundry/                                  # marketplace root
 ├── .claude-plugin/marketplace.json            # marketplace catalog
 ├── README.md
+├── CHANGELOG.md
+├── scripts/lint.sh                            # repository invariants as greps (CI)
+├── .github/workflows/check.yml
 └── plugins/
     └── loop-foundry/                          # the plugin
         ├── .claude-plugin/plugin.json         # plugin metadata
@@ -85,12 +89,25 @@ loop-foundry/                                  # marketplace root
                     ├── loop-spec.md           # LOOP_SPEC template (copied per loop)
                     ├── gaps.md                # gap-analysis checklist, YouTrack task drafting
                     ├── ladder.md              # runner architecture, journal schema, shadow/gated/autonomous
+                    ├── predictions.md         # prediction protocol in a tick: runner contract, predictions field, halt
                     └── security.md            # injection defense, credential policy, scope minimization
 ```
+
+## Companion plugin: prediction-protocol
+
+With [prediction-protocol](https://github.com/umar-s/prediction-protocol) (≥ 1.0.2) installed for the runner user, every tick runs under the protocol: one `PP_SESSION` with `predict on <loop> --loop --also …` before the executor (`claude -p --session-id <uuid>`), another for the verifier, `predict status` as a deterministic gate, and `predict report --json` snapshotted before and after the executor into the tick record as `predictions` with its delta — one journal carrying both the approval rate and the prediction rate. A one-way command inside a session is denied by the hook unless the session holds a receipt for it; a MISS pauses the loop (`loops/HALT/<loop>`) until the operator, as the runner user, acks the refuted belief. Shadow loops run without the plugin and record `predictions.gate = absent`; gated and autonomous loops do not.
 
 ## Companion skill: co-rar
 
 If the `co-rar` skill is installed, loop-foundry uses it for statistical-gate (CO-RAR-class) loops: 5-axis debugging, adversarial critic ticks, ADR/TtR metrics in the weekly audit. If absent, the pipeline degrades gracefully and proceeds without the proactive layer.
+
+## Development
+
+```bash
+bash scripts/lint.sh   # written rules as greps: manifests, version ↔ CHANGELOG, SKILL triggers/STOPs, reference parity and size, the prediction-protocol contract
+```
+
+The same script runs in CI on every push and pull request.
 
 ## License
 
